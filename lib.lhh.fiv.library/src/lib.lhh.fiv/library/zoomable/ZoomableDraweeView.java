@@ -180,7 +180,9 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy>
     if(event.getAction() == MotionEvent.ACTION_UP){
       if(event.getEventTime() - mCurrDownTime <= 250){
         //点击
-        mOnClickListener.onClick(this);
+        if(mOnClickListener != null){
+          mOnClickListener.onClick(this);
+        }
       }
     }
 

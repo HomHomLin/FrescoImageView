@@ -55,10 +55,6 @@ public class MultiPointerGestureDetector {
     return new MultiPointerGestureDetector();
   }
 
-  /**
-   * Sets the listener.
-   * @param listener listener to set
-   */
   public void setListener(Listener listener) {
     mListener = listener;
   }
@@ -74,10 +70,6 @@ public class MultiPointerGestureDetector {
     }
   }
 
-  /**
-   * This method can be overridden in order to perform threshold check or something similar.
-   * @return whether or not to start a new gesture
-   */
   protected boolean shouldStartGesture() {
     return true;
   }
@@ -100,11 +92,6 @@ public class MultiPointerGestureDetector {
     }
   }
 
-  /**
-   * Gets the index of the i-th pressed pointer.
-   * Normally, the index will be equal to i, except in the case when the pointer is released.
-   * @return index of the specified pointer or -1 if not found (i.e. not enough pointers are down)
-   */
   private int getPressedPointerIndex(MotionEvent event, int i) {
     final int count = event.getPointerCount();
     final int action = event.getActionMasked();
@@ -118,11 +105,6 @@ public class MultiPointerGestureDetector {
     return (i < count) ? i : -1;
   }
 
-  /**
-   * Handles the given motion event.
-   * @param event event to handle
-   * @return whether or not the event was handled
-   */
   public boolean onTouchEvent(final MotionEvent event) {
     switch (event.getActionMasked()) {
       case MotionEvent.ACTION_MOVE: {

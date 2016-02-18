@@ -190,15 +190,6 @@ public class DefaultZoomableController
     return new PointF(points[0], points[1]);
   }
 
-  /**
-   * Maps array of 2D points from absolute to the image's relative coordinate system,
-   * and writes the transformed points back into the array.
-   * Points are represented by float array of [x0, y0, x1, y1, ...].
-   *
-   * @param destPoints destination array (may be the same as source array)
-   * @param srcPoints source array
-   * @param numPoints number of points to map
-   */
   private void mapAbsoluteToRelative(float[] destPoints, float[] srcPoints, int numPoints) {
     for (int i = 0; i < numPoints; i++) {
       destPoints[i * 2 + 0] = (srcPoints[i * 2 + 0] - mImageBounds.left) / mImageBounds.width();
@@ -206,15 +197,6 @@ public class DefaultZoomableController
     }
   }
 
-  /**
-   * Maps array of 2D points from relative to the image's absolute coordinate system,
-   * and writes the transformed points back into the array
-   * Points are represented by float array of [x0, y0, x1, y1, ...].
-   *
-   * @param destPoints destination array (may be the same as source array)
-   * @param srcPoints source array
-   * @param numPoints number of points to map
-   */
   private void mapRelativeToAbsolute(float[] destPoints, float[] srcPoints, int numPoints) {
     for (int i = 0; i < numPoints; i++) {
       destPoints[i * 2 + 0] = srcPoints[i * 2 + 0] * mImageBounds.width() + mImageBounds.left;
@@ -250,16 +232,6 @@ public class DefaultZoomableController
     return false;
   }
 
-  /**
-   * Zooms to the desired scale and positions the view so that imagePoint is in the center.
-   * <p>
-   * It might not be possible to center imagePoint (= a corner for e.g.), in those cases the view
-   * will be adjusted so that there are no black bars in it.
-   * Resets any previous transform and cancels the current gesture if one is happening.
-   *
-   * @param scale desired scale, will be limited to {min, max} scale factor
-   * @param imagePoint 2D point in image's relative coordinate system (i.e. 0 <= x, y <= 1)
-   */
   public void zoomToImagePoint(float scale, PointF imagePoint) {
     if (mGestureDetector.isGestureInProgress()) {
       mGestureDetector.reset();
@@ -327,11 +299,6 @@ public class DefaultZoomableController
     }
   }
 
-  /**
-   * Keeps the view inside the image if possible, if not (i.e. image is smaller than view)
-   * centers the image.
-   * @return whether adjustments were needed or not
-   */
   private boolean limitTranslation() {
     RectF bounds = mTransformedImageBounds;
     bounds.set(mImageBounds);

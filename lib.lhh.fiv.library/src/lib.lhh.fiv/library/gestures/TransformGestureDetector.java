@@ -49,10 +49,6 @@ public class TransformGestureDetector implements MultiPointerGestureDetector.Lis
     return new TransformGestureDetector(MultiPointerGestureDetector.newInstance());
   }
 
-  /**
-   * Sets the listener.
-   * @param listener listener to set
-   */
   public void setListener(Listener listener) {
     mListener = listener;
   }
@@ -64,11 +60,6 @@ public class TransformGestureDetector implements MultiPointerGestureDetector.Lis
     mDetector.reset();
   }
 
-  /**
-   * Handles the given motion event.
-   * @param event event to handle
-   * @return whether or not the event was handled
-   */
   public boolean onTouchEvent(final MotionEvent event) {
     return mDetector.onTouchEvent(event);
   }
