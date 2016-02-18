@@ -9,8 +9,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lhh.frescoimageview.demo.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <lib.lhh.fiv.library.FrescoZoomImageView
+        android:id="@+id/fiv"
+        android:layout_width="300dp"
+        android:layout_height="300dp"/>
 </RelativeLayout>
