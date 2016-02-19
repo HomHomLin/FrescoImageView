@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
@@ -21,11 +20,11 @@ import lib.lhh.fiv.library.zoomable.ZoomableDraweeView;
  * Created by Linhh on 16/2/18.
  */
 public class FrescoZoomImageView extends ZoomableDraweeView{
-
-    //    private final static String TAG = "FrescoThumbnailView";
-    private final static String HTTP_PERFIX = "http://";
-    private final static String HTTPS_PERFIX = "https://";
-    private final static String FILE_PERFIX = "file://";
+//
+//    //    private final static String TAG = "FrescoThumbnailView";
+//    private final static String HTTP_PERFIX = "http://";
+//    private final static String HTTPS_PERFIX = "https://";
+//    private final static String FILE_PERFIX = "file://";
 
     private String mThumbnailUrl = null;
     private int  mDefaultResID = 0;
@@ -145,7 +144,7 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
             mThumbnailUrl = url;
             mDefaultResID = defaultResID;
 
-            if (mThumbnailUrl.startsWith(HTTP_PERFIX) || mThumbnailUrl.startsWith(HTTPS_PERFIX)) {
+            if (mThumbnailUrl.startsWith(FrescoImageView.HTTP_PERFIX) || mThumbnailUrl.startsWith(FrescoImageView.HTTPS_PERFIX)) {
 
                 Uri uri = Uri.parse(mThumbnailUrl);
                 this.getHierarchy().setPlaceholderImage(defaultResID);
@@ -195,8 +194,8 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
             this.setController(defaultRes);
             return;
         }
-        if(!path.startsWith(FILE_PERFIX)){
-            path = FILE_PERFIX + path;
+        if(!path.startsWith(FrescoImageView.FILE_PERFIX)){
+            path = FrescoImageView.FILE_PERFIX + path;
         }
         Uri uri = Uri.parse(path);
         setController(uri, null);

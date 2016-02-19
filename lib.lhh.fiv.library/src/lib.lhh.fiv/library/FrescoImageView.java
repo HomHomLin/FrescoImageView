@@ -20,9 +20,9 @@ import com.facebook.imagepipeline.request.Postprocessor;
 public class FrescoImageView extends SimpleDraweeView {
 
 //    private final static String TAG = "FrescoThumbnailView";
-    private final static String HTTP_PERFIX = "http://";
-    private final static String HTTPS_PERFIX = "https://";
-    private final static String FILE_PERFIX = "file://";
+    public final static String HTTP_PERFIX = "http://";
+    public final static String HTTPS_PERFIX = "https://";
+    public final static String FILE_PERFIX = "file://";
 
     private String mThumbnailUrl = null;
     private int  mDefaultResID = 0;
