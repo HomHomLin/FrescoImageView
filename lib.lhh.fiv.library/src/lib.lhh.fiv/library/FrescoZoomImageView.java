@@ -225,5 +225,10 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
     public boolean isAnim(){
         return mAnim;
     }
+
+    public void asCircle(){
+        RoundingParams roundingParams = RoundingParams.asCircle();
+        this.getHierarchy().setRoundingParams(roundingParams);
+    }
 }
 

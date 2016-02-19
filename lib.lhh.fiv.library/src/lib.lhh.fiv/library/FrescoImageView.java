@@ -217,5 +217,10 @@ public class FrescoImageView extends SimpleDraweeView {
     public boolean isAnim(){
         return mAnim;
     }
+
+    public void asCircle(){
+        RoundingParams roundingParams = RoundingParams.asCircle();
+        this.getHierarchy().setRoundingParams(roundingParams);
+    }
 }
 
