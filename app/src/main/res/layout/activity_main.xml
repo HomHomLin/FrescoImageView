@@ -8,9 +8,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lhh.frescoimageview.demo.MainActivity">
-
-    <lib.lhh.fiv.library.FrescoZoomImageView
-        android:id="@+id/fiv"
-        android:layout_width="300dp"
-        android:layout_height="300dp"/>
+    <Button
+        android:id="@+id/btn_fresco_zoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fresco_zoom"/>
+    <Button
+        android:id="@+id/btn_fresco_normal"
+        android:layout_below="@+id/btn_fresco_zoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fresco_normal"/>
 </RelativeLayout>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FrescoImageView</string>
+    <string name="fresco_zoom">Zoom Fresco Activity</string>
+    <string name="fresco_normal">Normal Fresco Activity</string>
 </resources>

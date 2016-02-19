@@ -6,8 +6,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.request.ImageRequest;
@@ -47,19 +45,19 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
 
     public FrescoZoomImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+//        init();
     }
 
-    public void init(){
-
-        GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
-//                .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)
-//                .setProgressBarImage(new ProgressBarDrawable())
-                .build();
-
-//        view.setController(ctrl);
-        this.setHierarchy(hierarchy);
-    }
+//    public void init(){
+//
+//        GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
+//                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
+////                .setProgressBarImage(new ProgressBarDrawable())
+//                .build();
+//
+////        view.setController(ctrl);
+//        this.setHierarchy(hierarchy);
+//    }
 
     private void setController(int resid){
         if(resid == 0){
@@ -222,6 +220,10 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
 
     public void setAnim(boolean b){
         mAnim = b;
+    }
+
+    public boolean isAnim(){
+        return mAnim;
     }
 }
 

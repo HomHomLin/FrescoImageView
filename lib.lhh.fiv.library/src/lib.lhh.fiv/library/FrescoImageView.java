@@ -213,5 +213,9 @@ public class FrescoImageView extends SimpleDraweeView {
     public void setAnim(boolean b){
         mAnim = b;
     }
+
+    public boolean isAnim(){
+        return mAnim;
+    }
 }
 

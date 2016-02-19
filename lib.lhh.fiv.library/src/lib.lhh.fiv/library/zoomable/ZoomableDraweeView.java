@@ -41,6 +41,7 @@ import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeView;
+import com.facebook.drawee.view.GenericDraweeView;
 
 /**
  * DraweeView that has zoomable capabilities.
@@ -48,12 +49,14 @@ import com.facebook.drawee.view.DraweeView;
  * Once the image loads, pinch-to-zoom and translation gestures are enabled.
  *
  */
-public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy>
+public class ZoomableDraweeView extends GenericDraweeView
         implements ZoomableController.Listener {
 
 //  private static final Class<?> TAG = ZoomableDraweeView.class;
 
   private static final float HUGE_IMAGE_SCALE_FACTOR_THRESHOLD = 1.1f;
+
+  private static final int TOUCH_TIME = 250;//触摸间隔时间
 
   private final RectF mImageBounds = new RectF();
   private final RectF mViewBounds = new RectF();
@@ -178,7 +181,7 @@ public class ZoomableDraweeView extends DraweeView<GenericDraweeHierarchy>
     }
 
     if(event.getAction() == MotionEvent.ACTION_UP){
-      if(event.getEventTime() - mCurrDownTime <= 250){
+      if(event.getEventTime() - mCurrDownTime <= TOUCH_TIME){
         //点击
         if(mOnClickListener != null){
           mOnClickListener.onClick(this);
