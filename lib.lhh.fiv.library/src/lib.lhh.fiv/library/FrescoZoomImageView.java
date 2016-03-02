@@ -18,11 +18,6 @@ import lib.lhh.fiv.library.zoomable.ZoomableDraweeView;
  * Created by Linhh on 16/2/18.
  */
 public class FrescoZoomImageView extends ZoomableDraweeView{
-//
-//    //    private final static String TAG = "FrescoThumbnailView";
-//    private final static String HTTP_PERFIX = "http://";
-//    private final static String HTTPS_PERFIX = "https://";
-//    private final static String FILE_PERFIX = "file://";
 
     private String mThumbnailUrl = null;
     private int  mDefaultResID = 0;
@@ -45,19 +40,7 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
 
     public FrescoZoomImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-//        init();
     }
-
-//    public void init(){
-//
-//        GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(getResources())
-//                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
-////                .setProgressBarImage(new ProgressBarDrawable())
-//                .build();
-//
-////        view.setController(ctrl);
-//        this.setHierarchy(hierarchy);
-//    }
 
     private void setController(int resid){
         if(resid == 0){
@@ -186,6 +169,10 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
         return this.mDefaultResID;
     }
 
+    public void setPlaceholderImage(int placeholderImage){
+        this.getHierarchy().setPlaceholderImage(placeholderImage);
+    }
+
     public void loadLocalImage(String path, int defaultRes){
         this.getHierarchy().setPlaceholderImage(defaultRes);
         if(null == path || path.length() == 0){
@@ -226,6 +213,9 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
         return mAnim;
     }
 
+    /**
+     * 圆形
+     */
     public void asCircle(){
         RoundingParams roundingParams = RoundingParams.asCircle();
         this.getHierarchy().setRoundingParams(roundingParams);

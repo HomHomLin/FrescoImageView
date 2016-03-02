@@ -178,6 +178,10 @@ public class FrescoImageView extends SimpleDraweeView {
         return this.mDefaultResID;
     }
 
+    public void setPlaceholderImage(int placeholderImage){
+        this.getHierarchy().setPlaceholderImage(placeholderImage);
+    }
+
     public void loadLocalImage(String path, int defaultRes){
         this.getHierarchy().setPlaceholderImage(defaultRes);
         if(null == path || path.length() == 0){
