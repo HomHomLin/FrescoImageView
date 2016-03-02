@@ -11,13 +11,13 @@ FrescoImageView是一种Android平台的图像控件，可以异步加载网络�
 
 Project site： <https://github.com/HomHomLin/FrescoImageView>.
 
-最新版本:v1.2.1
+最新版本:v1.2.0
 
 ##导入项目
 
 **Gradle dependency:**
 ``` groovy
-compile 'homhomlin.lib:frescoimageview:1.2.1'
+compile 'homhomlin.lib:frescoimageview:1.2.0'
 ```
 
 or
@@ -27,7 +27,7 @@ or
 <dependency>
   <groupId>homhomlin.lib</groupId>
   <artifactId>frescoimageview</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.0</version>
 </dependency>
 ```
 
