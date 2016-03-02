@@ -17,7 +17,7 @@ import lib.lhh.fiv.library.zoomable.ZoomableDraweeView;
 /**
  * Created by Linhh on 16/2/18.
  */
-public class FrescoZoomImageView extends ZoomableDraweeView{
+public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoController{
 
     private String mThumbnailUrl = null;
     private int  mDefaultResID = 0;
@@ -106,17 +106,15 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
         this.setController(mController);
     }
 
-    public void setPostProcessor(Postprocessor postProcessor){
-        this.mPostProcessor = postProcessor;
+    @Override
+    public int getDefaultResID() {
+        return this.mDefaultResID;
     }
 
-    public Postprocessor getPostProcessor(){
-        return this.mPostProcessor;
-    }
-
-    public void loadView(String lowUrl ,String url, int defaultResID) {
+    @Override
+    public void loadView(String lowUrl, String url, int defaultResID) {
         try {
-            if (url == null || url.length() <= 0) {
+            if (TextUtils.isEmpty(url)) {
                 this.getHierarchy().setPlaceholderImage(defaultResID);
                 this.setController(defaultResID);
                 mThumbnailUrl = url;
@@ -125,7 +123,8 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
             mThumbnailUrl = url;
             mDefaultResID = defaultResID;
 
-            if (mThumbnailUrl.startsWith(FrescoImageView.HTTP_PERFIX) || mThumbnailUrl.startsWith(FrescoImageView.HTTPS_PERFIX)) {
+            if (mThumbnailUrl.startsWith(FrescoController.HTTP_PERFIX)
+                    || mThumbnailUrl.startsWith(FrescoController.HTTPS_PERFIX)) {
 
                 Uri uri = Uri.parse(mThumbnailUrl);
                 this.getHierarchy().setPlaceholderImage(defaultResID);
@@ -146,79 +145,98 @@ public class FrescoZoomImageView extends ZoomableDraweeView{
         }catch (OutOfMemoryError e){
             e.printStackTrace();
         }
-
     }
 
+    @Override
     public void loadView(String url, int defaultResID) {
         this.loadView(null, url, defaultResID);
     }
 
-    /**
-     * 获得当前使用的图片URL
-     * @return
-     */
-    public String getThumbnailUrl(){
-        return this.mThumbnailUrl;
-    }
-
-    /**
-     * 获得当前使用的默认占位图
-     * @return
-     */
-    public int getDefaultResID(){
-        return this.mDefaultResID;
-    }
-
-    public void setPlaceholderImage(int placeholderImage){
-        this.getHierarchy().setPlaceholderImage(placeholderImage);
-    }
-
-    public void loadLocalImage(String path, int defaultRes){
+    @Override
+    public void loadLocalImage(String path, int defaultRes) {
         this.getHierarchy().setPlaceholderImage(defaultRes);
-        if(null == path || path.length() == 0){
+        if(TextUtils.isEmpty(path)){
             this.setController(defaultRes);
             return;
         }
-        if(!path.startsWith(FrescoImageView.FILE_PERFIX)){
-            path = FrescoImageView.FILE_PERFIX + path;
+        if(!path.startsWith(FrescoController.FILE_PERFIX)){
+            path = FrescoController.FILE_PERFIX + path;
         }
         Uri uri = Uri.parse(path);
         setController(uri, null);
     }
 
-    public void setCornerRadius(float radius){
-        RoundingParams roundingParams = RoundingParams.fromCornersRadius(radius);
-        this.getHierarchy().setRoundingParams(roundingParams);
+    @Override
+    public Postprocessor getPostProcessor() {
+        return this.mPostProcessor;
     }
 
-    public void setCornerRadius(float radius, int overlay_color){
-        RoundingParams roundingParams = RoundingParams.fromCornersRadius(radius).
+    @Override
+    public void setPostProcessor(Postprocessor postProcessor) {
+        this.mPostProcessor = postProcessor;
+    }
+
+    @Override
+    public String getThumbnailUrl() {
+        return this.mThumbnailUrl;
+    }
+
+    @Override
+    public void asCircle() {
+        setRoundingParmas(getRoundingParams().setRoundAsCircle(true));
+    }
+
+    @Override
+    public void setBorder(int color, float width) {
+        setRoundingParmas(getRoundingParams().setBorder(color, width));
+    }
+
+    @Override
+    public void clearRoundingParams() {
+        setRoundingParmas(null);
+    }
+
+    @Override
+    public RoundingParams getRoundingParams() {
+        RoundingParams roundingParams = this.getHierarchy().getRoundingParams();
+        if(roundingParams == null){
+            roundingParams = new RoundingParams();
+        }
+        return roundingParams;
+    }
+
+    @Override
+    public void setRoundingParmas(RoundingParams roundingParmas) {
+        this.getHierarchy().setRoundingParams(roundingParmas);
+    }
+
+    @Override
+    public void setCircle(int overlay_color) {
+        setRoundingParmas(getRoundingParams().setRoundAsCircle(true).
                 setRoundingMethod(RoundingParams.RoundingMethod.OVERLAY_COLOR).
-                setOverlayColor(overlay_color);
-        this.getHierarchy().setRoundingParams(roundingParams);
+                setOverlayColor(overlay_color));
     }
 
-    public void setCircle(int overlay_color){
-        RoundingParams roundingParams = RoundingParams.asCircle().
+    @Override
+    public void setCornerRadius(float radius) {
+        setRoundingParmas(getRoundingParams().setCornersRadius(radius));
+    }
+
+    @Override
+    public void setCornerRadius(float radius, int overlay_color) {
+        setRoundingParmas(getRoundingParams().setCornersRadius(radius).
                 setRoundingMethod(RoundingParams.RoundingMethod.OVERLAY_COLOR).
-                setOverlayColor(overlay_color);
-        this.getHierarchy().setRoundingParams(roundingParams);
+                setOverlayColor(overlay_color));
     }
 
-    public void setAnim(boolean b){
-        mAnim = b;
-    }
-
-    public boolean isAnim(){
+    @Override
+    public boolean isAnim() {
         return mAnim;
     }
 
-    /**
-     * 圆形
-     */
-    public void asCircle(){
-        RoundingParams roundingParams = RoundingParams.asCircle();
-        this.getHierarchy().setRoundingParams(roundingParams);
+    @Override
+    public void setAnim(boolean anim) {
+        mAnim = anim;
     }
 }
 

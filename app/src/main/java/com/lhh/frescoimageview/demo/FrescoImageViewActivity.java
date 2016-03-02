@@ -18,6 +18,6 @@ public class FrescoImageViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fresco_imgeview);
         FrescoImageView frescoImageView = (FrescoImageView)findViewById(R.id.fiv);
         frescoImageView.asCircle();
-        frescoImageView.loadView(mImgUrl,R.mipmap.ic_launcher);
+        frescoImageView.loadView(mImgUrl, R.mipmap.ic_launcher);
     }
 }

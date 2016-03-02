@@ -18,12 +18,13 @@ public class FrescoZoomImageViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fresco_zoom_imageview);
-        FrescoZoomImageView frescoImageView = (FrescoZoomImageView)findViewById(R.id.fiv);
+        final FrescoZoomImageView frescoImageView = (FrescoZoomImageView)findViewById(R.id.fiv);
         frescoImageView.loadView(mImgUrl,R.mipmap.ic_launcher);
         frescoImageView.setOnDraweeClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(FrescoZoomImageViewActivity.this,"OnClick",Toast.LENGTH_SHORT).show();
+                frescoImageView.asCircle();
             }
         });
     }
