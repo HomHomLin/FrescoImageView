@@ -1,23 +1,25 @@
-# FrescoImageView
+# Fresco-ImageView
 
 FrescoImageView是一种Android平台的图像控件，可以异步加载网络图片、项目资源和本地图片，并且支持双指缩放、图片的基本处理以及Fresco的所有特性。
 
 该控件基于Facebook的图像加载库Fresco封装，Fresco的所有方法和属性都可以使用。
 
+Fresco-ImageView本身继承自DraweeView，所以可以直接把它当作DraweeView使用，除使用控件封装的加载方法外还可以通过Fresco原始的ImageRequest来加载图片。
+
 ## 特性
  * 直接继承Fresco的DraweeView，本质是View，同时兼容Fresco的所有参数和方法
  * 加载图片只需一步，无需繁杂的设置
- * 支持双指缩放，并且支持点击事件
+ * 支持双指缩放，并且支持点击事件，替代PhotoView的控件
 
 Project site： <https://github.com/HomHomLin/FrescoImageView>.
 
-最新版本:v1.2.0
+最新版本:v1.3.0
 
 ##导入项目
 
 **Gradle dependency:**
 ``` groovy
-compile 'homhomlin.lib:frescoimageview:1.2.0'
+compile 'homhomlin.lib:frescoimageview:1.3.0'
 ```
 
 or
@@ -27,7 +29,7 @@ or
 <dependency>
   <groupId>homhomlin.lib</groupId>
   <artifactId>frescoimageview</artifactId>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
@@ -156,6 +158,40 @@ frescoImageView.setCornerRadius(10);
 
 ```java
 frescoImageView.setPostProcessor(postProcessor);
+```
+
+###设置是否点击重试加载
+
+有时候图片会加载失败，这时候你可以设置是否允许让用户点击该图片重试加载，通过setTapToRetryEnabled(boolean tapToRetryEnabled)方法来设置。
+
+```java
+frescoImageView.setTapToRetryEnabled(true);
+```
+
+###设置图片边框
+
+通过setBorder(int color, float width)方法来设置。
+
+```java
+frescoImageView.setBorder(Color.BLACK, 3.0f);
+```
+
+###清除图片圆角属性
+
+也许你曾经设置过图片的圆角属性了，通过clearRoundingParams()方法可以清除他们来恢复到初始状态。
+
+```java
+frescoImageView.clearRoundingParams();
+```
+
+###设置加载监听
+
+有时候我们想监听图片加载的情况，通过setControllerListener(ControllerListener controllerListener)方法可以添加监听。
+
+通过ControllerListener controllerListener = new BaseControllerListener()可以创建监听器。
+
+```java
+frescoImageView.setControllerListener(controllerListener);
 ```
 
 ###其他
