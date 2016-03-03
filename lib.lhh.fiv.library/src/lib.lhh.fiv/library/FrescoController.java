@@ -1,5 +1,6 @@
 package lib.lhh.fiv.library;
 
+import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.imagepipeline.request.Postprocessor;
 
@@ -35,45 +36,9 @@ public interface FrescoController {
     public void loadLocalImage(String path, int defaultRes);
 
     /**
-     * 获得当前后处理
-     * @return
-     */
-    public Postprocessor getPostProcessor();
-
-    /**
-     * 设置后处理
-     * @param postProcessor
-     */
-    public void setPostProcessor(Postprocessor postProcessor);
-
-    /**
-     * 获得当前使用的默认图
-     * @return
-     */
-    public int getDefaultResID();
-
-    /**
-     * 获得当前加载的图片
-     * @return
-     */
-    public String getThumbnailUrl();
-
-    /**
      * 将该Fresco处理为圆形
      */
     public void asCircle();
-
-    /**
-     * 是否开启动画
-     * @return
-     */
-    public boolean isAnim();
-
-    /**
-     * 是否开启动画
-     * @param anim
-     */
-    public void setAnim(boolean anim);
 
     /**
      * 用一种颜色来遮挡View以实现圆形，在一些内存较低的机器上推荐使用
@@ -107,14 +72,35 @@ public interface FrescoController {
     public void clearRoundingParams();
 
     /**
-     * 获得当前使用的RoundingParams
-     */
-    public RoundingParams getRoundingParams();
-
-    /**
      * 设置RoundingParams
      * @param roundingParmas
      */
     public void setRoundingParmas(RoundingParams roundingParmas);
+
+    /**
+     * 设置下载监听器
+     * @param controllerListener
+     */
+    public void setControllerListener(ControllerListener controllerListener);
+
+
+    /**
+     * 设置后处理
+     * @param postProcessor
+     */
+    public void setPostProcessor(Postprocessor postProcessor);
+
+
+    /**
+     * 是否开启动画
+     * @param anim
+     */
+    public void setAnim(boolean anim);
+
+    /**
+     * 是否可以点击重试
+     * @param tapToRetryEnabled
+     */
+    public void setTapToRetryEnabled(boolean tapToRetryEnabled);
 
 }

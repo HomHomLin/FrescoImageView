@@ -1,15 +1,13 @@
 package lib.lhh.fiv.library;
 
 import android.content.Context;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.imagepipeline.request.Postprocessor;
 
 import lib.lhh.fiv.library.zoomable.ZoomableDraweeView;
@@ -17,18 +15,29 @@ import lib.lhh.fiv.library.zoomable.ZoomableDraweeView;
 /**
  * Created by Linhh on 16/2/18.
  */
-public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoController{
+public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoController, BaseFrescoImageView{
 
     private String mThumbnailUrl = null;
+
+    private String mLowThumbnailUrl = null;//低分辨率Url
+
     private int  mDefaultResID = 0;
 
     private ImageRequest mRequest;
 
+    private String mThumbnailPath = null;
+
     private boolean mAnim = true;//默认开启动画
+
+    private ImageRequest mLowResRequest;
+
+    private ControllerListener mControllerListener;
 
     private Postprocessor mPostProcessor;
 
     private DraweeController mController;
+
+    private boolean mTapToRetry = false;
 
     public FrescoZoomImageView(Context context) {
         this(context, null);
@@ -42,67 +51,23 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
         super(context, attrs, defStyle);
     }
 
-    private void setController(int resid){
-        if(resid == 0){
-            return;
-        }
+    private void setResourceController(){
 
-        if(mPostProcessor != null) {
-            mRequest = ImageRequestBuilder.newBuilderWithResourceId(resid)
-                    .setPostprocessor(mPostProcessor)
-                    .setLocalThumbnailPreviewsEnabled(true)
-                    .build();
+        mRequest = FrescoFactory.buildImageRequestWithResource(this);
 
-        }else{
-            mRequest = ImageRequestBuilder.newBuilderWithResourceId(resid)
-                    .setLocalThumbnailPreviewsEnabled(true)
-                    .build();
-        }
-
-        mController = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(mRequest)
-                .setAutoPlayAnimations(mAnim)
-                .setOldController(this.getController())
-                .build();
+        mController = FrescoFactory.buildDraweeController(this);
 
         this.setController(mController);
     }
 
-    private void setController(Uri uri, Uri lowResUri){
+    private void setSourceController(){
 
-        if(uri == null){
-            return;
-        }
+        mRequest = FrescoFactory.buildImageRequestWithSource(this);
 
-        if(mPostProcessor != null) {
-            mRequest = ImageRequestBuilder.newBuilderWithSource(uri)
-                    .setPostprocessor(mPostProcessor)
-                    .setLocalThumbnailPreviewsEnabled(true)
-                    .build();
+        mLowResRequest = FrescoFactory.buildLowImageRequest(this);
 
-        }else{
-            mRequest = ImageRequestBuilder.newBuilderWithSource(uri)
-                    .setLocalThumbnailPreviewsEnabled(true)
-                    .build();
-        }
+        mController = FrescoFactory.buildDraweeController(this);
 
-        ImageRequest lowResRequest = ImageRequest.fromUri(lowResUri);
-
-        if(lowResRequest == null) {
-            mController = Fresco.newDraweeControllerBuilder()
-                    .setImageRequest(mRequest)
-                    .setAutoPlayAnimations(mAnim)
-                    .setOldController(this.getController())
-                    .build();
-
-        }else{
-            mController = Fresco.newDraweeControllerBuilder()
-                    .setImageRequest(mRequest)
-                    .setLowResImageRequest(lowResRequest)
-                    .setAutoPlayAnimations(mAnim)
-                    .setOldController(this.getController())
-                    .build();
-        }
         this.setController(mController);
     }
 
@@ -114,33 +79,23 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
     @Override
     public void loadView(String lowUrl, String url, int defaultResID) {
         try {
-            if (TextUtils.isEmpty(url)) {
+            mThumbnailPath = null;
+            mThumbnailUrl = url;
+            mLowThumbnailUrl = url;
+            mDefaultResID = defaultResID;
+            if (!TextUtils.isEmpty(mThumbnailUrl)
+                    && (mThumbnailUrl.startsWith(FrescoController.HTTP_PERFIX)
+                    || mThumbnailUrl.startsWith(FrescoController.HTTPS_PERFIX))) {
+
                 this.getHierarchy().setPlaceholderImage(defaultResID);
-                this.setController(defaultResID);
-                mThumbnailUrl = url;
+
+                this.setSourceController();
+
                 return;
             }
-            mThumbnailUrl = url;
-            mDefaultResID = defaultResID;
 
-            if (mThumbnailUrl.startsWith(FrescoController.HTTP_PERFIX)
-                    || mThumbnailUrl.startsWith(FrescoController.HTTPS_PERFIX)) {
-
-                Uri uri = Uri.parse(mThumbnailUrl);
-                this.getHierarchy().setPlaceholderImage(defaultResID);
-
-                Uri lowUri = null;
-
-                if(!TextUtils.isEmpty(lowUrl)){
-                    lowUri = Uri.parse(mThumbnailUrl);
-                }
-
-                setController(uri ,lowUri);
-
-            } else {
-                this.getHierarchy().setPlaceholderImage(defaultResID);
-                this.setController(defaultResID);
-            }
+            this.getHierarchy().setPlaceholderImage(defaultResID);
+            this.setResourceController();
 
         }catch (OutOfMemoryError e){
             e.printStackTrace();
@@ -154,16 +109,25 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
 
     @Override
     public void loadLocalImage(String path, int defaultRes) {
-        this.getHierarchy().setPlaceholderImage(defaultRes);
-        if(TextUtils.isEmpty(path)){
-            this.setController(defaultRes);
-            return;
+        try {
+            mThumbnailPath = path;
+            mDefaultResID = defaultRes;
+            mThumbnailUrl = null;
+            mLowThumbnailUrl = null;
+
+            this.getHierarchy().setPlaceholderImage(mDefaultResID);
+
+            if (TextUtils.isEmpty(mThumbnailPath)) {
+                this.setResourceController();
+                return;
+            }
+            if (!mThumbnailPath.startsWith(FrescoController.FILE_PERFIX)) {
+                mThumbnailPath = FrescoController.FILE_PERFIX + mThumbnailPath;
+            }
+            this.setSourceController();
+        }catch (OutOfMemoryError e){
+            e.printStackTrace();
         }
-        if(!path.startsWith(FrescoController.FILE_PERFIX)){
-            path = FrescoController.FILE_PERFIX + path;
-        }
-        Uri uri = Uri.parse(path);
-        setController(uri, null);
     }
 
     @Override
@@ -182,6 +146,21 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
     }
 
     @Override
+    public String getLowThumbnailUrl() {
+        return this.mLowThumbnailUrl;
+    }
+
+    @Override
+    public String getThumbnailPath() {
+        return this.mThumbnailPath;
+    }
+
+    @Override
+    public boolean getTapToRetryEnabled() {
+        return this.mTapToRetry;
+    }
+
+    @Override
     public void asCircle() {
         setRoundingParmas(getRoundingParams().setRoundAsCircle(true));
     }
@@ -197,6 +176,26 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
     }
 
     @Override
+    public ControllerListener getControllerListener() {
+        return this.mControllerListener;
+    }
+
+    @Override
+    public DraweeController getDraweeController() {
+        return this.getController();
+    }
+
+    @Override
+    public ImageRequest getLowImageRequest() {
+        return this.mLowResRequest;
+    }
+
+    @Override
+    public ImageRequest getImageRequest() {
+        return this.mRequest;
+    }
+
+    @Override
     public RoundingParams getRoundingParams() {
         RoundingParams roundingParams = this.getHierarchy().getRoundingParams();
         if(roundingParams == null){
@@ -208,6 +207,11 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
     @Override
     public void setRoundingParmas(RoundingParams roundingParmas) {
         this.getHierarchy().setRoundingParams(roundingParmas);
+    }
+
+    @Override
+    public void setControllerListener(ControllerListener controllerListener) {
+        this.mControllerListener = controllerListener;
     }
 
     @Override
@@ -238,5 +242,9 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
     public void setAnim(boolean anim) {
         mAnim = anim;
     }
-}
 
+    @Override
+    public void setTapToRetryEnabled(boolean tapToRetryEnabled) {
+        this.mTapToRetry = tapToRetryEnabled;
+    }
+}

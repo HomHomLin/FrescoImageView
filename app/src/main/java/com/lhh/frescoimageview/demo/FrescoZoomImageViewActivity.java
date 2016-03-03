@@ -25,6 +25,7 @@ public class FrescoZoomImageViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(FrescoZoomImageViewActivity.this,"OnClick",Toast.LENGTH_SHORT).show();
                 frescoImageView.asCircle();
+                frescoImageView.loadView("https://avatars0.githubusercontent.com/u/66577?v=3&s=460",R.mipmap.ic_launcher);
             }
         });
     }
