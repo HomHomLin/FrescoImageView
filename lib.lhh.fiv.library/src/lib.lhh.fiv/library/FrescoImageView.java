@@ -39,6 +39,8 @@ public class FrescoImageView extends SimpleDraweeView implements FrescoControlle
 
     private boolean mTapToRetry = false;
 
+    private boolean mAutoRotateEnabled = false;
+
     public FrescoImageView(Context context, GenericDraweeHierarchy hierarchy) {
         super(context, hierarchy);
     }
@@ -165,6 +167,11 @@ public class FrescoImageView extends SimpleDraweeView implements FrescoControlle
     }
 
     @Override
+    public boolean getAutoRotateEnabled() {
+        return this.mAutoRotateEnabled;
+    }
+
+    @Override
     public void asCircle() {
         setRoundingParmas(getRoundingParams().setRoundAsCircle(true));
     }
@@ -250,6 +257,11 @@ public class FrescoImageView extends SimpleDraweeView implements FrescoControlle
     @Override
     public void setTapToRetryEnabled(boolean tapToRetryEnabled) {
         this.mTapToRetry = tapToRetryEnabled;
+    }
+
+    @Override
+    public void setAutoRotateEnabled(boolean autoRotateEnabled) {
+        this.mAutoRotateEnabled = autoRotateEnabled;
     }
 }
 

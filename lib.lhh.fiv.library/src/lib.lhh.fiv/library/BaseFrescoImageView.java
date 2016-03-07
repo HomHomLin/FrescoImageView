@@ -81,4 +81,10 @@ public interface BaseFrescoImageView {
      * @return
      */
     public boolean getTapToRetryEnabled();
+
+    /**
+     * 是否自动旋转
+     * @return
+     */
+    public boolean getAutoRotateEnabled();
 }

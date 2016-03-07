@@ -39,6 +39,8 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
 
     private boolean mTapToRetry = false;
 
+    private boolean mAutoRotateEnabled = false;
+
     public FrescoZoomImageView(Context context) {
         this(context, null);
     }
@@ -161,6 +163,11 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
     }
 
     @Override
+    public boolean getAutoRotateEnabled() {
+        return this.mAutoRotateEnabled;
+    }
+
+    @Override
     public void asCircle() {
         setRoundingParmas(getRoundingParams().setRoundAsCircle(true));
     }
@@ -246,5 +253,10 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
     @Override
     public void setTapToRetryEnabled(boolean tapToRetryEnabled) {
         this.mTapToRetry = tapToRetryEnabled;
+    }
+
+    @Override
+    public void setAutoRotateEnabled(boolean autoRotateEnabled) {
+        this.mAutoRotateEnabled = autoRotateEnabled;
     }
 }

@@ -103,4 +103,10 @@ public interface FrescoController {
      */
     public void setTapToRetryEnabled(boolean tapToRetryEnabled);
 
+    /**
+     * 是否自动旋转
+     * @param autoRotateEnabled
+     */
+    public void setAutoRotateEnabled(boolean autoRotateEnabled);
+
 }

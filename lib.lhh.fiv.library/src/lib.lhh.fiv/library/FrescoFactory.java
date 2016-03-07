@@ -27,6 +27,7 @@ public class FrescoFactory {
     public static ImageRequest buildImageRequestWithResource(BaseFrescoImageView fresco){
         return  ImageRequestBuilder.newBuilderWithResourceId(fresco.getDefaultResID())
                 .setPostprocessor(fresco.getPostProcessor())
+                .setAutoRotateEnabled(fresco.getAutoRotateEnabled())
                 .setLocalThumbnailPreviewsEnabled(true)
                 .build();
     }
@@ -41,6 +42,7 @@ public class FrescoFactory {
         Uri uri = Uri.parse(thumbnail);
         return  ImageRequestBuilder.newBuilderWithSource(uri)
                 .setPostprocessor(fresco.getPostProcessor())
+                .setAutoRotateEnabled(fresco.getAutoRotateEnabled())
                 .setLocalThumbnailPreviewsEnabled(true)
                 .build();
     }
