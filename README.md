@@ -41,16 +41,29 @@ or
 在项目导入FrescoImageView后，还需要导入Fresco，如下：
 
 ``` groovy
-compile 'com.facebook.fresco:fresco:0.9.0'
+compile 'com.facebook.fresco:fresco:0.10.0'
 ```
 
-截止至当前Readme编写时间，Fresco的最新版本为0.9.0。
+截止至当前Readme编写时间，Fresco的最新版本为0.10.0。
 
 FrescoImageView本身并不包含Fresco，如果你还需要OKHTTP请查阅Fresco用法或者看这个[DEMO](https://github.com/HomHomLin/FrescoImageView/blob/master/app/src/main/java/com/lhh/frescoimageview/demo/App.java)。
 
+Fresco-0.10.0与之前版本有所区别，它将GIF和WEBP的库分离出来，所以如果你的项目使用了Fresco-0.10.0并且需要FrescoImageView实现gif和webp的功能，那么请添加以下依赖：
+
+``` groovy
+compile 'com.facebook.fresco:animated-webp:0.10.0'
+compile 'com.facebook.fresco:animated-gif:0.10.0'
+```
+
+如果需要Android2.3版本实现Gif，需要添加额外依赖：
+
+``` groovy
+compile 'com.facebook.fresco:animated-base-support:0.10.0'
+```
+
 ###配置Fresco
 
-在项目的AndroidManifest.xml中添加网络访问权限（视需求而定）。
+在项目的AndroidManifest.xml中添加网络访问权限（视需求而定），example中使用了OkHttp，如果你有需要请参照example。
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
