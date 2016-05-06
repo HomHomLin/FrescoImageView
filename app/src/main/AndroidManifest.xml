@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".FrescoZoomImageViewActivity">
         </activity>
+        <activity android:name=".FrescoGifImageViewActivity">
+        </activity>
     </application>
 
 </manifest>

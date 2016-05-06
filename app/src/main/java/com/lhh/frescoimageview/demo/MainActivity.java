@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button mBtnFrescoNormal;
     Button mBtnFrescoZoom;
+    Button mBtnFrescoGif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mBtnFrescoNormal = (Button)findViewById(R.id.btn_fresco_normal);
         mBtnFrescoZoom = (Button)findViewById(R.id.btn_fresco_zoom);
+        mBtnFrescoGif = (Button)findViewById(R.id.btn_fresco_gif);
         mBtnFrescoNormal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,FrescoZoomImageViewActivity.class));
+            }
+        });
+        mBtnFrescoGif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,FrescoGifImageViewActivity.class));
             }
         });
     }

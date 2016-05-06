@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.imagepipeline.request.ImageRequest;
@@ -258,5 +259,10 @@ public class FrescoZoomImageView extends ZoomableDraweeView implements FrescoCon
     @Override
     public void setAutoRotateEnabled(boolean autoRotateEnabled) {
         this.mAutoRotateEnabled = autoRotateEnabled;
+    }
+
+    @Override
+    public void setActualImageScaleType(ScalingUtils.ScaleType scaleType) {
+        this.getHierarchy().setActualImageScaleType(scaleType);
     }
 }

@@ -19,4 +19,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/fresco_normal"/>
+    <Button
+        android:id="@+id/btn_fresco_gif"
+        android:layout_below="@+id/btn_fresco_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fresco_gif"/>
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package lib.lhh.fiv.library;
 
 import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.imagepipeline.request.Postprocessor;
 
@@ -108,5 +109,11 @@ public interface FrescoController {
      * @param autoRotateEnabled
      */
     public void setAutoRotateEnabled(boolean autoRotateEnabled);
+
+    /**
+     * 设置图片缩放type
+     * @param scaleType
+     */
+    public void setActualImageScaleType(ScalingUtils.ScaleType scaleType);
 
 }
