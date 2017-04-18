@@ -15,7 +15,7 @@ Project site： <https://github.com/HomHomLin/FrescoImageView>.
 
 最新版本:v1.3.0
 
-##导入项目
+## 导入项目
 
 **Gradle dependency:**
 ``` groovy
@@ -34,9 +34,9 @@ or
 ```
 
 
-##用法
+## 用法
 
-###导入Fresco
+### 导入Fresco
 
 在项目导入FrescoImageView后，还需要导入Fresco，如下：
 
@@ -61,7 +61,7 @@ compile 'com.facebook.fresco:animated-gif:0.10.0'
 compile 'com.facebook.fresco:animated-base-support:0.10.0'
 ```
 
-###配置Fresco
+### 配置Fresco
 
 在项目的AndroidManifest.xml中添加网络访问权限（视需求而定），example中使用了OkHttp，如果你有需要请参照example。
 
@@ -81,7 +81,7 @@ public class App extends Application{
 }
 ```
 
-###添加控件到XML
+### 添加控件到XML
 
 在需要添加的界面xml中添加组件。
 
@@ -101,7 +101,7 @@ FrescoImageView提供两种组件，分别是FrescoImageView（普通控件）�
 FrescoZoomImageView frescoImageView = (FrescoZoomImageView)findViewById(R.id.fiv);
 ```
 
-###加载网络图片
+### 加载网络图片
 
 调用void loadView(String url, int defaultResID)方法。
 
@@ -113,7 +113,7 @@ frescoImageView.loadView(mImgUrl,R.mipmap.ic_launcher);
 
 如果需要先显示默认图，然后加载显示一张低分辨率的图，最后再显示原图，可以使用void loadView(String lowUrl ,String url, int defaultResID)方法，lowUrl表示低分辨率图片地址。
 
-###加载本地图片
+### 加载本地图片
 
 调用void loadLocalImage(String path, int defaultRes)方法。
 
@@ -123,7 +123,7 @@ path表示本地图片的绝对路径。
 frescoImageView.loadLocalImage(path,R.mipmap.ic_launcher);
 ```
 
-###加载项目资源
+### 加载项目资源
 
 选择以上任意一个方法，非defaultResId参数填写为null即可。
 
@@ -131,17 +131,17 @@ frescoImageView.loadLocalImage(path,R.mipmap.ic_launcher);
 frescoImageView.loadLocalImage(null,R.mipmap.ic_launcher);
 ```
 
-###点击监听
+### 点击监听
 
 如果你使用的是FrescoZoomImageView，则需要调用setOnDraweeClickListener(OnClickListener l)方法来设置点击事件的监听。
 
 如果你使用的是FrescoImageView，则可以直接使用setOnClicklistener(OnClickListener l)。
 
-###开启和关闭gif动画
+### 开启和关闭gif动画
 
 如果你的图片是gif类型的，则我们可以控制FrescoImageView的Gif动画，通过FrescoImageView的setAnim(boolean anim)来控制，默认情况下，我们是开启动画的。
 
-###设置圆形
+### 设置圆形
 
 如果你需要将显示的图片变为圆形，则可以通过asCircle()方法。
 
@@ -149,7 +149,7 @@ frescoImageView.loadLocalImage(null,R.mipmap.ic_launcher);
 frescoImageView.asCircle();
 ```
 
-###Gif图片设置为圆形
+### Gif图片设置为圆形
 
 由于Fresco的原因，如果你需要将gif设置为圆形，则需要使用setCircle(int overlay_color)方法，overlay_color为背景图颜色。
 
@@ -157,7 +157,7 @@ frescoImageView.asCircle();
 frescoImageView.setCircle(Color.WHITE);
 ```
 
-###设置圆角
+### 设置圆角
 
 通过setCornerRadius(float radius)方法，并传入需要的角度即可实现圆角和边角的切割。
 
@@ -165,7 +165,7 @@ frescoImageView.setCircle(Color.WHITE);
 frescoImageView.setCornerRadius(10);
 ```
 
-###设置图像处理器
+### 设置图像处理器
 
 你可能需要对图片做额外的处理，那么你可以编写一个Fresco的PostProcessor，并通过setPostProcessor(PostProcessor)方法来设置一个处理器。
 
@@ -173,7 +173,7 @@ frescoImageView.setCornerRadius(10);
 frescoImageView.setPostProcessor(postProcessor);
 ```
 
-###设置是否点击重试加载
+### 设置是否点击重试加载
 
 有时候图片会加载失败，这时候你可以设置是否允许让用户点击该图片重试加载，通过setTapToRetryEnabled(boolean tapToRetryEnabled)方法来设置。
 
@@ -181,7 +181,7 @@ frescoImageView.setPostProcessor(postProcessor);
 frescoImageView.setTapToRetryEnabled(true);
 ```
 
-###设置图片边框
+### 设置图片边框
 
 通过setBorder(int color, float width)方法来设置。
 
@@ -189,7 +189,7 @@ frescoImageView.setTapToRetryEnabled(true);
 frescoImageView.setBorder(Color.BLACK, 3.0f);
 ```
 
-###清除图片圆角属性
+### 清除图片圆角属性
 
 也许你曾经设置过图片的圆角属性了，通过clearRoundingParams()方法可以清除他们来恢复到初始状态。
 
@@ -197,7 +197,7 @@ frescoImageView.setBorder(Color.BLACK, 3.0f);
 frescoImageView.clearRoundingParams();
 ```
 
-###设置加载监听
+### 设置加载监听
 
 有时候我们想监听图片加载的情况，通过setControllerListener(ControllerListener controllerListener)方法可以添加监听。
 
@@ -207,7 +207,7 @@ frescoImageView.clearRoundingParams();
 frescoImageView.setControllerListener(controllerListener);
 ```
 
-###其他
+### 其他
 
 FrescoImageView基于Fresco封装，因此Fresco的用法同样适用于FrescoImageView。
 
@@ -219,7 +219,7 @@ FrescoImageView基于Fresco封装，因此Fresco的用法同样适用于FrescoIm
 
  * Linhonghong - <linhh90@163.com>
 
-##License
+## License
 Copyright 2016 LinHongHong
 
 Licensed under the Apache License, Version 2.0 (the "License");
